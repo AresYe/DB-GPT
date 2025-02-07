@@ -8,7 +8,7 @@ repos:
         language: system
         exclude: '^dbgpt/app/static/|^web/'
         types: [python]
-        stages: [commit]
+        stages: [pre-commit]
         pass_filenames: false
         args: []
       - id: python-test
@@ -17,7 +17,7 @@ repos:
         language: system
         exclude: '^dbgpt/app/static/|^web/'
         types: [python]
-        stages: [commit]
+        stages: [pre-commit]
         pass_filenames: false
         args: []
       - id: python-test-doc
@@ -26,7 +26,7 @@ repos:
         language: system
         exclude: '^dbgpt/app/static/|^web/'
         types: [python]
-        stages: [commit]
+        stages: [pre-commit]
         pass_filenames: false
         args: []
       - id: python-lint-mypy
@@ -35,7 +35,7 @@ repos:
         language: system
         exclude: '^dbgpt/app/static/|^web/'
         types: [python]
-        stages: [commit]
+        stages: [pre-commit]
         pass_filenames: false
         args: []
 
