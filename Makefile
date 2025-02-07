@@ -5,7 +5,7 @@ VENV = venv
 
 # Detect the operating system and set the virtualenv bin directory
 ifeq ($(OS),Windows_NT)
-	VENV_BIN=$(VENV)/Scripts
+	VENV_BIN=$(VENV)\Scripts
 else
 	VENV_BIN=$(VENV)/bin
 endif
@@ -15,48 +15,49 @@ setup: $(VENV)/bin/activate
 $(VENV)/bin/activate: $(VENV)/.venv-timestamp
 
 $(VENV)/.venv-timestamp: setup.py requirements
-	# Create new virtual environment if setup.py has changed
-	python3 -m venv $(VENV)
-	$(VENV_BIN)/pip install --upgrade pip
-	$(VENV_BIN)/pip install -r requirements/dev-requirements.txt
-	$(VENV_BIN)/pip install -r requirements/lint-requirements.txt
-	touch $(VENV)/.venv-timestamp
+# Create new virtual environment if setup.py has changed
+	python -m venv $(VENV)
+	$(VENV_BIN)\python.exe -m pip install --upgrade pip
+	$(VENV_BIN)\python.exe -m pip install -r requirements/dev-requirements.txt
+	$(VENV_BIN)\python.exe -m pip install -r requirements/lint-requirements.txt
+# 使用echo命令来创建或更新时间戳文件
+	echo "" > $(VENV)/.venv-timestamp
 
 testenv: $(VENV)/.testenv
 
 $(VENV)/.testenv: $(VENV)/bin/activate
-	# $(VENV_BIN)/pip install -e ".[framework]"
-	# the openai optional dependency is include framework and rag dependencies
-	$(VENV_BIN)/pip install -e ".[openai]"
-	touch $(VENV)/.testenv
-
+# $(VENV_BIN)\python.exe -m pip install -e ".[framework]"
+# the openai optional dependency is include framework and rag dependencies
+	$(VENV_BIN)\python.exe -m pip install -e ".[openai]"
+# 使用echo命令来创建或更新时间戳文件
+	echo "" > $(VENV)/.testenv
 
 .PHONY: fmt
 fmt: setup ## Format Python code
-	# TODO: Use isort to sort Python imports.
-	# https://github.com/PyCQA/isort
-	# $(VENV_BIN)/isort .
-	$(VENV_BIN)/isort dbgpt/
-	$(VENV_BIN)/isort --extend-skip="examples/notebook" examples
-	# https://github.com/psf/black
-	$(VENV_BIN)/black --extend-exclude="examples/notebook" .
-	# TODO: Use blackdoc to format Python doctests.
-	# https://blackdoc.readthedocs.io/en/latest/
-	# $(VENV_BIN)/blackdoc .
-	$(VENV_BIN)/blackdoc dbgpt
-	$(VENV_BIN)/blackdoc examples
-	# TODO: Use flake8 to enforce Python style guide.
-	# https://flake8.pycqa.org/en/latest/
-	$(VENV_BIN)/flake8 dbgpt/core/ dbgpt/rag/ dbgpt/storage/ dbgpt/datasource/ dbgpt/client/ dbgpt/agent/ dbgpt/vis/ dbgpt/experimental/
-	# TODO: More package checks with flake8.
+# TODO: Use isort to sort Python imports.
+# https://github.com/PyCQA/isort
+# $(VENV_BIN)/isort.exe .
+	$(VENV_BIN)\isort.exe dbgpt/
+	$(VENV_BIN)\isort.exe --extend-skip="examples/notebook" examples
+# https://github.com/psf/black
+	$(VENV_BIN)\black.exe --extend-exclude="examples/notebook" .
+# TODO: Use blackdoc to format Python doctests.
+# https://blackdoc.readthedocs.io/en/latest/
+# $(VENV_BIN)/blackdoc.exe .
+	$(VENV_BIN)\blackdoc.exe dbgpt
+	$(VENV_BIN)\blackdoc.exe examples
+# TODO: Use flake8 to enforce Python style guide.
+# https://flake8.pycqa.org/en/latest/
+	$(VENV_BIN)\flake8.exe dbgpt/core/ dbgpt/rag/ dbgpt/storage/ dbgpt/datasource/ dbgpt/client/ dbgpt/agent/ dbgpt/vis/ dbgpt/experimental/
+# TODO: More package checks with flake8.
 
 .PHONY: fmt-check
 fmt-check: setup ## Check Python code formatting and style without making changes
-	$(VENV_BIN)/isort --check-only dbgpt/
-	$(VENV_BIN)/isort --check-only --extend-skip="examples/notebook" examples
-	$(VENV_BIN)/black --check --extend-exclude="examples/notebook" .
-	$(VENV_BIN)/blackdoc --check dbgpt examples
-	$(VENV_BIN)/flake8 dbgpt/core/ dbgpt/rag/ dbgpt/storage/ dbgpt/datasource/ dbgpt/client/ dbgpt/agent/ dbgpt/vis/ dbgpt/experimental/
+	$(VENV_BIN)\isort.exe --check-only dbgpt/
+	$(VENV_BIN)\isort.exe --check-only --extend-skip="examples/notebook" examples
+	$(VENV_BIN)\black.exe --check --extend-exclude="examples/notebook" .
+	$(VENV_BIN)\blackdoc.exe --check dbgpt examples
+	$(VENV_BIN)\flake8.exe dbgpt/core/ dbgpt/rag/ dbgpt/storage/ dbgpt/datasource/ dbgpt/client/ dbgpt/agent/ dbgpt/vis/ dbgpt/experimental/
 
 .PHONY: pre-commit
 pre-commit: fmt-check test test-doc mypy ## Run formatting and unit tests before committing
@@ -66,17 +67,17 @@ test: $(VENV)/.testenv ## Run unit tests
 
 .PHONY: test-doc
 test-doc: $(VENV)/.testenv ## Run doctests
-	# -k "not test_" skips tests that are not doctests.
+# -k "not test_" skips tests that are not doctests.
 	$(VENV_BIN)/pytest --doctest-modules -k "not test_" dbgpt/core
 
 .PHONY: mypy
 mypy: $(VENV)/.testenv ## Run mypy checks
-	# https://github.com/python/mypy
+# https://github.com/python/mypy
 	$(VENV_BIN)/mypy --config-file .mypy.ini dbgpt/rag/ dbgpt/datasource/ dbgpt/client/ dbgpt/agent/ dbgpt/vis/ dbgpt/experimental/
-	# rag depends on core and storage, so we not need to check it again.
-	# $(VENV_BIN)/mypy --config-file .mypy.ini dbgpt/storage/
-	# $(VENV_BIN)/mypy --config-file .mypy.ini dbgpt/core/
-	# TODO: More package checks with mypy.
+# rag depends on core and storage, so we not need to check it again.
+# $(VENV_BIN)/mypy --config-file .mypy.ini dbgpt/storage/
+# $(VENV_BIN)/mypy --config-file .mypy.ini dbgpt/core/
+# TODO: More package checks with mypy.
 
 .PHONY: coverage
 coverage: setup ## Run tests and report coverage
@@ -100,7 +101,7 @@ package: clean-dist ## Package the project for distribution
 
 .PHONY: upload
 upload: ## Upload the package to PyPI
-	# upload to testpypi: twine upload --repository testpypi dist/*
+# upload to testpypi: twine upload --repository testpypi dist/*
 	twine upload dist/*
 
 .PHONY: help
