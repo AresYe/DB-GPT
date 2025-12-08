@@ -10,11 +10,10 @@ import { useAsyncEffect } from 'ahooks';
 import { Modal } from 'antd';
 import { cloneDeep } from 'lodash';
 import { useSearchParams } from 'next/navigation';
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 
 const ChatCompletion: React.FC = () => {
-  const scrollableRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
   const chatId = searchParams?.get('id') ?? '';
 
@@ -56,12 +55,12 @@ const ChatCompletion: React.FC = () => {
       if (res) {
         const paramKey: string[] = res?.param_need?.map(i => i.type) || [];
         const resModel = res?.param_need?.filter(item => item.type === 'model')[0]?.value || model;
-        const temperature = res?.param_need?.filter(item => item.type === 'temperature')[0]?.value || 0.5;
-        const maxNewTokens = res?.param_need?.filter(item => item.type === 'max_new_tokens')[0]?.value || 2048;
+        const temperature = res?.param_need?.filter(item => item.type === 'temperature')[0]?.value || 0.6;
+        const maxNewTokens = res?.param_need?.filter(item => item.type === 'max_new_tokens')[0]?.value || 4000;
         const resource = res?.param_need?.filter(item => item.type === 'resource')[0]?.bind_value;
         setAppInfo(res || ({} as IApp));
-        setTemperatureValue(temperature || 0.5);
-        setMaxNewTokensValue(maxNewTokens || 2048);
+        setTemperatureValue(temperature || 0.6);
+        setMaxNewTokensValue(maxNewTokens || 4000);
         setModelValue(resModel);
         setResourceValue(resource);
         await handleChat(initMessage.message, {
@@ -79,14 +78,8 @@ const ChatCompletion: React.FC = () => {
     }
   }, [chatId, currentDialogInfo]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      scrollableRef.current?.scrollTo(0, scrollableRef.current?.scrollHeight);
-    }, 50);
-  }, [history, history[history.length - 1]?.context]);
-
   return (
-    <div className='flex flex-col w-5/6 mx-auto' ref={scrollableRef}>
+    <div className='flex flex-col w-5/6 mx-auto'>
       {!!showMessages.length &&
         showMessages.map((content, index) => {
           return (

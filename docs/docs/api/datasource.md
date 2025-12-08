@@ -21,6 +21,7 @@ import TabItem from '@theme/TabItem';
   values={[
     {label: 'Curl', value: 'curl'},
     {label: 'Python', value: 'python'},
+    {label: 'Python(OpenAI SDK)', value: 'openai-sdk'},
   ]
 }>
 
@@ -34,7 +35,7 @@ curl -X POST "http://localhost:5670/api/v2/chat/completions" \
     -H "Authorization: Bearer $DBGPT_API_KEY" \
     -H "accept: application/json" \
     -H "Content-Type: application/json" \
-    -d "{\"messages\":\"show space datas limit 5\",\"model\":\"chatgpt_proxyllm\", \"chat_mode\": \"chat_data\", \"chat_param\": \"$DB_NAME\"}"
+    -d "{\"messages\":\"show space datas limit 5\",\"model\":\"gpt-4o\", \"chat_mode\": \"chat_data\", \"chat_param\": \"$DB_NAME\"}"
 
 ```
  </TabItem>
@@ -42,7 +43,7 @@ curl -X POST "http://localhost:5670/api/v2/chat/completions" \
 <TabItem value="python">
 
 ```python
-from dbgpt.client import Client
+from dbgpt_client import Client
 
 DBGPT_API_KEY = "dbgpt"
 DB_NAME="{your_db_name}"
@@ -50,10 +51,44 @@ DB_NAME="{your_db_name}"
 client = Client(api_key=DBGPT_API_KEY)
 res = client.chat(
     messages="show space datas limit 5", 
-    model="chatgpt_proxyllm", 
+    model="gpt-4o", 
     chat_mode="chat_data", 
     chat_param=DB_NAME
 )
+```
+ </TabItem>
+
+<TabItem value="openai-sdk">
+
+```python
+from openai import OpenAI
+
+DBGPT_API_KEY = "dbgpt"
+DB_NAME="{your_db_name}"
+
+client = OpenAI(
+    api_key=DBGPT_API_KEY,
+    base_url="http://localhost:5670/api/v2"
+)
+response = client.chat.completions.create(
+    model="gpt-4o",
+    messages=[
+        {
+            "role": "user",
+            "content": "Hello",
+        },
+    ],
+    extra_body={
+        "chat_mode": "chat_data",
+        "chat_param": DB_NAME,
+    },
+    stream=True,
+    max_tokens=2048,
+)
+
+for chunk in response:
+    delta_content = chunk.choices[0].delta.content
+    print(delta_content, end="", flush=True)
 ```
  </TabItem>
 </Tabs>
@@ -64,7 +99,7 @@ res = client.chat(
     "id": "2bb80fdd-e47e-4083-8bc9-7ca66ee0931b",
     "object": "chat.completion",
     "created": 1711509733,
-    "model": "chatgpt_proxyllm",
+    "model": "gpt-4o",
     "choices": [
         {
             "index": 0,
@@ -136,8 +171,8 @@ DATASOURCE_ID={YOUR_DATASOURCE_ID}
 
 
 ```python
-from dbgpt.client import Client
-from dbgpt.client.datasource import delete_datasource
+from dbgpt_client import Client
+from dbgpt_client.datasource import delete_datasource
 
 DBGPT_API_KEY = "dbgpt"
 datasource_id = "{your_datasource_id}"
@@ -189,8 +224,8 @@ curl -X GET "http://localhost:5670/api/v2/serve/datasources/$DATASOURCE_ID" -H "
 
 
 ```python
-from dbgpt.client import Client
-from dbgpt.client.datasource import get_datasource
+from dbgpt_client import Client
+from dbgpt_client.datasource import get_datasource
 
 DBGPT_API_KEY = "dbgpt"
 datasource_id = "{your_datasource_id}"
@@ -243,8 +278,8 @@ curl -X GET "http://localhost:5670/api/v2/serve/datasources" -H "Authorization: 
 
 
 ```python
-from dbgpt.client import Client
-from dbgpt.client.datasource import list_datasource
+from dbgpt_client import Client
+from dbgpt_client.datasource import list_datasource
 
 DBGPT_API_KEY = "dbgpt"
 

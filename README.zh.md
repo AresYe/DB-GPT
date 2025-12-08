@@ -1,7 +1,7 @@
-# DB-GPT: AI原生数据应用开发框架
+# <img src="./assets/LOGO_SMALL.png" alt="Logo" style="vertical-align: middle; height: 24px;" /> DB-GPT: AI原生数据应用开发框架
 
 <p align="left">
-  <img src="./assets/LOGO.png" width="100%" />
+  <img src="./assets/Twitter_LOGO.png" width="100%" />
 </p>
 
 
@@ -13,27 +13,41 @@
     <a href="https://github.com/eosphoros-ai/DB-GPT">
         <img alt="forks" src="https://img.shields.io/github/forks/eosphoros-ai/db-gpt?style=social" />
     </a>
+    <a href="http://dbgpt.cn/">
+        <img alt="Official Website" src="https://img.shields.io/badge/Official%20website-DB--GPT-blue?style=flat&labelColor=3366CC" />
+    </a>
     <a href="https://opensource.org/licenses/MIT">
-      <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
+      <img alt="License: MIT" src="https://img.shields.io/github/license/eosphoros-ai/db-gpt?style=flat&labelColor=009966&color=009933" />
     </a>
      <a href="https://github.com/eosphoros-ai/DB-GPT/releases">
-      <img alt="Release Notes" src="https://img.shields.io/github/release/eosphoros-ai/DB-GPT" />
+      <img alt="Release Notes" src="https://img.shields.io/github/v/release/eosphoros-ai/db-gpt?style=flat&labelColor=FF9933&color=FF6633" />
     </a>
     <a href="https://github.com/eosphoros-ai/DB-GPT/issues">
-      <img alt="Open Issues" src="https://img.shields.io/github/issues-raw/eosphoros-ai/DB-GPT" />
+      <img alt="Open Issues" src="https://img.shields.io/github/issues-raw/eosphoros-ai/db-gpt?style=flat&labelColor=666666&color=333333" />
     </a>
-    <a href="https://discord.gg/7uQnPuveTY">
-      <img alt="Discord" src="https://dcbadge.vercel.app/api/server/7uQnPuveTY?compact=true&style=flat" />
+    <a href="https://x.com/DBGPT_AI">
+      <img alt="X (formerly Twitter) Follow" src="https://img.shields.io/twitter/follow/DBGPT_AI" />
+    </a>
+    <a href="https://medium.com/@dbgpt0506">
+      <img alt="Medium Follow" src="https://badgen.net/badge/Medium/DB-GPT/333333?icon=medium&labelColor=666666" />
+    </a>
+    <a href="https://space.bilibili.com/3537113070963392">
+      <img alt="Bilibili Space" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.bilibili.com%2Fx%2Frelation%2Fstat%3Fvmid%3D3537113070963392&query=data.follower&style=flat&logo=bilibili&logoColor=white&label=Bilibili%20Fans&labelColor=F37697&color=6495ED" />
     </a>
     <a href="https://join.slack.com/t/slack-inu2564/shared_invite/zt-29rcnyw2b-N~ubOD9kFc7b7MDOAM1otA">
-      <img alt="Slack" src="https://badgen.net/badge/Slack/Join%20DB-GPT/0abd59?icon=slack" />
+      <img alt="Slack" src="https://img.shields.io/badge/Slack-Join%20us-5d6b98?style=flat&logo=slack&labelColor=7d89b0" />
     </a>
     <a href="https://codespaces.new/eosphoros-ai/DB-GPT">
       <img alt="Open in GitHub Codespaces" src="https://github.com/codespaces/badge.svg" />
     </a>
   </p>
 
-[**English**](README.md) | [**Discord**](https://discord.gg/7uQnPuveTY) | [**文档**](https://www.yuque.com/eosphoros/dbgpt-docs/bex30nsv60ru0fmx) | [**微信**](https://github.com/eosphoros-ai/DB-GPT/blob/main/README.zh.md#%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC) | [**社区**](https://github.com/eosphoros-ai/community) | [**Paper**](https://arxiv.org/pdf/2312.17449.pdf)
+[![English](https://img.shields.io/badge/English-d9d9d9?style=flat-square)](README.md)
+[![简体中文](https://img.shields.io/badge/简体中文-d9d9d9?style=flat-square)](README.zh.md)
+[![日本語](https://img.shields.io/badge/日本語-d9d9d9?style=flat-square)](README.ja.md) 
+
+[**文档**](http://docs.dbgpt.cn/docs/overview/) | [**联系团队**](https://github.com/eosphoros-ai/DB-GPT/blob/main/README.zh.md#%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC) | [**社区**](https://github.com/eosphoros-ai/community) | [**Paper**](https://arxiv.org/pdf/2312.17449.pdf)
+
 </div>
 
 ## DB-GPT 是什么？
@@ -44,39 +58,7 @@
 
 🚀 **数据3.0 时代，基于模型、数据库，企业/开发者可以用更少的代码搭建自己的专属应用。**
 
-## 效果演示
-
-### AI原生数据智能应用
----
-- [V0.6.0发布——一系列重大功能更新](https://www.yuque.com/eosphoros/dbgpt-docs/fho86kk4e9y4rkpd)
-  - AWEL协议升级2.0，支持更复杂的编排，同时优化了前端可视化与交互能力。
-  - 支持数据应用的创建与生命周期管理，提供多种应用构建模式。1. 多智能体自动规划模式、2. 任务流编排模式、3. 单一智能体模式、4. 原生应用模式
-  - GraphRAG支持图社区摘要与混合检索，性能与检索效果有显著优势，同时支持丰富的前端可视化。
-  - 支持意图识别、槽位填充与Prompt管理。
-  - GPT-Vis前端可视化升级，支持更丰富的可视化图表。 
-  - 支持Text2NLU与Text2GQL微调, 即新增意图分类与从自然语言到图语言的微调。 
-
-
-### Data Agents 
-
-![app_chat_v0 6](https://github.com/user-attachments/assets/a2f0a875-df8c-4f0d-89a3-eed321c02113)
-
-![app_manage_chat_data_v0 6](https://github.com/user-attachments/assets/c8cc85bb-e3c2-4fab-8fb9-7b4b469d0611)
-
-![chat_dashboard_display_v0 6](https://github.com/user-attachments/assets/b15d6ebe-54c4-4527-a16d-02fbbaf20dc9)
-
-![agent_prompt_awel_v0 6](https://github.com/user-attachments/assets/40761507-a1e1-49d4-b49a-3dd9a5ea41cc)
-
-
-## 目录
-- [架构方案](#架构方案)
-- [安装](#安装)
-- [特性简介](#特性一览)
-- [贡献](#贡献)
-- [路线图](#路线图)
-- [联系我们](#联系我们)
-
-## 架构方案
+### 架构方案
 
 <p align="center">
   <img src="./assets/dbgpt.png" width="800px" />
@@ -95,17 +77,66 @@
 
 - **数据源**: 对接各类数据源，实现生产业务数据无缝对接到DB-GPT核心能力。 
 
-### RAG生产落地实践架构
+#### 子模块
+- [DB-GPT-Hub](https://github.com/eosphoros-ai/DB-GPT-Hub) 通过微调来持续提升Text2SQL效果 
+- [DB-GPT-Plugins](https://github.com/eosphoros-ai/DB-GPT-Plugins) DB-GPT 插件仓库, 兼容Auto-GPT
+- [GPT-Vis](https://github.com/eosphoros-ai/DB-GPT-Web) 可视化协议
+- [dbgpts](https://github.com/eosphoros-ai/dbgpts)  dbgpts 是官方提供的数据应用仓库, 包含数据智能应用, 智能体编排流程模版, 通用算子等构建在DB-GPT之上的资源。 
+
+
+#### DeepWiki
+- [DB-GPT](https://deepwiki.com/eosphoros-ai/DB-GPT)
+- [DB-GPT-HUB](https://deepwiki.com/eosphoros-ai/DB-GPT-Hub)
+- [dbgpts](https://deepwiki.com/eosphoros-ai/dbgpts)
+
+
+
+#### Text2SQL 微调模型
+
+  |     LLM     |  Supported  | 
+  |:-----------:|:-----------:|
+  |    LLaMA    |      ✅     |
+  |   LLaMA-2   |      ✅     | 
+  |    BLOOM    |      ✅     | 
+  |   BLOOMZ    |      ✅     | 
+  |   Falcon    |      ✅     | 
+  |  Baichuan   |      ✅     | 
+  |  Baichuan2  |      ✅     | 
+  |  InternLM   |      ✅     |
+  |    Qwen     |      ✅     | 
+  |   XVERSE    |      ✅     | 
+  |  ChatGLM2   |      ✅     |  
+
+#### RAG生产落地实践架构
 <p align="center">
   <img src="./assets/RAG-IN-ACTION.jpg" width="800px" />
 </p>
 
-### 子模块
-- [DB-GPT-Hub](https://github.com/eosphoros-ai/DB-GPT-Hub) 通过微调来持续提升Text2SQL效果 
-- [DB-GPT-Plugins](https://github.com/eosphoros-ai/DB-GPT-Plugins) DB-GPT 插件仓库, 兼容Auto-GPT
-- [GPT-Vis](https://github.com/eosphoros-ai/DB-GPT-Web) 可视化协议 
 
-- [dbgpts](https://github.com/eosphoros-ai/dbgpts)  dbgpts 是官方提供的数据应用仓库, 包含数据智能应用, 智能体编排流程模版, 通用算子等构建在DB-GPT之上的资源。 
+## 效果演示
+
+### AI原生数据智能应用
+---
+- [V0.7.0发布——一系列重大功能更新](https://www.yuque.com/eosphoros/dbgpt-docs/asweou4i9rhnwchm)
+  - [支持MCP协议](https://github.com/eosphoros-ai/DB-GPT/pull/2497)
+  - 支持DeepSeek-R1、QwQ-32B等推理模型
+  - 重构基础模块
+    - [dbgpt-app](./packages/dbgpt-app)
+    - [dbgpt-core](./packages/dbgpt-core)
+    - [dbgpt-serve](./packages/dbgpt-serve)
+    - [dbgpt-client](./packages/dbgpt-client)
+    - [dbgpt-accelerator](./packages/dbgpt-accelerator)
+    - [dbgpt-ext](./packages/dbgpt-ext)
+### Data Agents 
+
+![app_chat_v0 6](https://github.com/user-attachments/assets/a2f0a875-df8c-4f0d-89a3-eed321c02113)
+
+![app_manage_chat_data_v0 6](https://github.com/user-attachments/assets/c8cc85bb-e3c2-4fab-8fb9-7b4b469d0611)
+
+![chat_dashboard_display_v0 6](https://github.com/user-attachments/assets/b15d6ebe-54c4-4527-a16d-02fbbaf20dc9)
+
+![agent_prompt_awel_v0 6](https://github.com/user-attachments/assets/40761507-a1e1-49d4-b49a-3dd9a5ea41cc)
+
 
 ## 安装
 
@@ -162,46 +193,113 @@
   海量模型支持，包括开源、API代理等几十种大语言模型。如LLaMA/LLaMA2、Baichuan、ChatGLM、文心、通义、智谱等。当前已支持如下模型: 
 
   - 新增支持模型
-    - 🔥🔥🔥  [Qwen2.5-72B-Instruct](https://huggingface.co/Qwen/Qwen2.5-72B-Instruct)
-    - 🔥🔥🔥  [Qwen2.5-32B-Instruct](https://huggingface.co/Qwen/Qwen2.5-32B-Instruct)
-    - 🔥🔥🔥  [Qwen2.5-14B-Instruct](https://huggingface.co/Qwen/Qwen2.5-14B-Instruct)
-    - 🔥🔥🔥  [Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct)
-    - 🔥🔥🔥  [Qwen2.5-3B-Instruct](https://huggingface.co/Qwen/Qwen2.5-3B-Instruct)
-    - 🔥🔥🔥  [Qwen2.5-1.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct)
-    - 🔥🔥🔥  [Qwen2.5-0.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct)
-    - 🔥🔥🔥  [Qwen2.5-Coder-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct)
-    - 🔥🔥🔥  [Qwen2.5-Coder-1.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-Coder-1.5B-Instruct)
-    - 🔥🔥🔥  [Meta-Llama-3.1-405B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3.1-405B-Instruct)
-    - 🔥🔥🔥  [Meta-Llama-3.1-70B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3.1-70B-Instruct)
-    - 🔥🔥🔥  [Meta-Llama-3.1-8B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct)
-    - 🔥🔥🔥  [gemma-2-27b-it](https://huggingface.co/google/gemma-2-27b-it)
-    - 🔥🔥🔥  [gemma-2-9b-it](https://huggingface.co/google/gemma-2-9b-it)
-    - 🔥🔥🔥  [DeepSeek-Coder-V2-Instruct](https://huggingface.co/deepseek-ai/DeepSeek-Coder-V2-Instruct)
-    - 🔥🔥🔥  [DeepSeek-Coder-V2-Lite-Instruct](https://huggingface.co/deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct)
-    - 🔥🔥🔥  [Qwen2-57B-A14B-Instruct](https://huggingface.co/Qwen/Qwen2-57B-A14B-Instruct)
-    - 🔥🔥🔥  [Qwen2-57B-A14B-Instruct](https://huggingface.co/Qwen/Qwen2-57B-A14B-Instruct)
-    - 🔥🔥🔥  [Qwen2-72B-Instruct](https://huggingface.co/Qwen/Qwen2-72B-Instruct)
-    - 🔥🔥🔥  [Qwen2-7B-Instruct](https://huggingface.co/Qwen/Qwen2-7B-Instruct)
-    - 🔥🔥🔥  [Qwen2-1.5B-Instruct](https://huggingface.co/Qwen/Qwen2-1.5B-Instruct)
-    - 🔥🔥🔥  [Qwen2-0.5B-Instruct](https://huggingface.co/Qwen/Qwen2-0.5B-Instruct)
-    - 🔥🔥🔥  [glm-4-9b-chat](https://huggingface.co/THUDM/glm-4-9b-chat)
-    - 🔥🔥🔥  [Phi-3](https://huggingface.co/collections/microsoft/phi-3-6626e15e9585a200d2d761e3)
-    - 🔥🔥🔥  [Yi-1.5-34B-Chat](https://huggingface.co/01-ai/Yi-1.5-34B-Chat)
-    - 🔥🔥🔥  [Yi-1.5-9B-Chat](https://huggingface.co/01-ai/Yi-1.5-9B-Chat)
-    - 🔥🔥🔥  [Yi-1.5-6B-Chat](https://huggingface.co/01-ai/Yi-1.5-6B-Chat)
-    - 🔥🔥🔥  [Qwen1.5-110B-Chat](https://huggingface.co/Qwen/Qwen1.5-110B-Chat)
-    - 🔥🔥🔥  [Qwen1.5-MoE-A2.7B-Chat](https://huggingface.co/Qwen/Qwen1.5-MoE-A2.7B-Chat)
-    - 🔥🔥🔥  [Meta-Llama-3-70B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3-70B-Instruct)
-    - 🔥🔥🔥  [Meta-Llama-3-8B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct)
-    - 🔥🔥🔥  [CodeQwen1.5-7B-Chat](https://huggingface.co/Qwen/CodeQwen1.5-7B-Chat)
-    - 🔥🔥🔥  [Qwen1.5-32B-Chat](https://huggingface.co/Qwen/Qwen1.5-32B-Chat)
-    - 🔥🔥🔥  [Starling-LM-7B-beta](https://huggingface.co/Nexusflow/Starling-LM-7B-beta)
-    - 🔥🔥🔥  [gemma-7b-it](https://huggingface.co/google/gemma-7b-it)
-    - 🔥🔥🔥  [gemma-2b-it](https://huggingface.co/google/gemma-2b-it)
-    - 🔥🔥🔥  [SOLAR-10.7B](https://huggingface.co/upstage/SOLAR-10.7B-Instruct-v1.0)
-    - 🔥🔥🔥  [Mixtral-8x7B](https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1)
-    - 🔥🔥🔥  [Qwen-72B-Chat](https://huggingface.co/Qwen/Qwen-72B-Chat)
-    - 🔥🔥🔥  [Yi-34B-Chat](https://huggingface.co/01-ai/Yi-34B-Chat)
+    <table>
+      <thead>
+        <tr>
+          <th>Provider</th>
+          <th>Supported</th>
+          <th>Models</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="center" valign="middle">DeepSeek</td>
+          <td align="center" valign="middle">✅</td>
+          <td>
+            🔥🔥🔥  <a href="https://huggingface.co/deepseek-ai/DeepSeek-R1-0528">DeepSeek-R1-0528</a><br/>
+            🔥🔥🔥  <a href="https://huggingface.co/deepseek-ai/DeepSeek-V3-0324">DeepSeek-V3-0324</a><br/>
+            🔥🔥🔥  <a href="https://huggingface.co/deepseek-ai/DeepSeek-R1">DeepSeek-R1</a><br/>
+            🔥🔥🔥  <a href="https://huggingface.co/deepseek-ai/DeepSeek-V3">DeepSeek-V3</a><br/>
+            🔥🔥🔥  <a href="https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-70B">DeepSeek-R1-Distill-Llama-70B</a><br/>
+            🔥🔥🔥  <a href="https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B">DeepSeek-R1-Distill-Qwen-32B</a><br/>
+            🔥🔥🔥  <a href="https://huggingface.co/deepseek-ai/DeepSeek-Coder-V2-Instruct">DeepSeek-Coder-V2-Instruct</a><br/>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" valign="middle">Qwen</td>
+          <td align="center" valign="middle">✅</td>
+          <td>
+            🔥🔥🔥  <a href="https://huggingface.co/Qwen/Qwen3-235B-A22B">Qwen3-235B-A22B</a><br/>
+            🔥🔥🔥  <a href="https://huggingface.co/Qwen/Qwen3-30B-A3B">Qwen3-30B-A3B</a><br/>
+            🔥🔥🔥  <a href="https://huggingface.co/Qwen/Qwen3-32B">Qwen3-32B</a><br/>
+            🔥🔥🔥  <a href="https://huggingface.co/Qwen/QwQ-32B">QwQ-32B</a><br/>
+            🔥🔥🔥  <a href="https://huggingface.co/Qwen/Qwen2.5-Coder-32B-Instruct">Qwen2.5-Coder-32B-Instruct</a><br/>
+            🔥🔥🔥  <a href="https://huggingface.co/Qwen/Qwen2.5-Coder-14B-Instruct">Qwen2.5-Coder-14B-Instruct</a><br/>
+            🔥🔥🔥  <a href="https://huggingface.co/Qwen/Qwen2.5-72B-Instruct">Qwen2.5-72B-Instruct</a><br/>
+            🔥🔥🔥  <a href="https://huggingface.co/Qwen/Qwen2.5-32B-Instruct">Qwen2.5-32B-Instruct</a><br/>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" valign="middle">GLM</td>
+          <td align="center" valign="middle">✅</td>
+          <td>
+            🔥🔥🔥  <a href="https://huggingface.co/THUDM/GLM-Z1-32B-0414">GLM-Z1-32B-0414</a><br/>
+            🔥🔥🔥  <a href="https://huggingface.co/THUDM/GLM-4-32B-0414">GLM-4-32B-0414</a><br/>
+            🔥🔥🔥  <a href="https://huggingface.co/THUDM/glm-4-9b-chat">Glm-4-9b-chat</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" valign="middle">Llama</td>
+          <td align="center" valign="middle">✅</td>
+          <td>
+            🔥🔥🔥  <a href="https://huggingface.co/meta-llama/Meta-Llama-3.1-405B-Instruct">Meta-Llama-3.1-405B-Instruct</a><br/>
+            🔥🔥🔥  <a href="https://huggingface.co/meta-llama/Meta-Llama-3.1-70B-Instruct">Meta-Llama-3.1-70B-Instruct</a><br/>
+            🔥🔥🔥  <a href="https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct">Meta-Llama-3.1-8B-Instruct</a><br/>
+            🔥🔥🔥  <a href="https://huggingface.co/meta-llama/Meta-Llama-3-70B-Instruct">Meta-Llama-3-70B-Instruct</a><br/>
+            🔥🔥🔥  <a href="https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct">Meta-Llama-3-8B-Instruct</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" valign="middle">Gemma</td>
+          <td align="center" valign="middle">✅</td>
+          <td>
+            🔥🔥🔥  <a href="https://huggingface.co/google/gemma-2-27b-it">gemma-2-27b-it</a><br>
+            🔥🔥🔥  <a href="https://huggingface.co/google/gemma-2-9b-it">gemma-2-9b-it</a><br>
+            🔥🔥🔥  <a href="https://huggingface.co/google/gemma-7b-it">gemma-7b-it</a><br>
+            🔥🔥🔥  <a href="https://huggingface.co/google/gemma-2b-it">gemma-2b-it</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" valign="middle">Yi</td>
+          <td align="center" valign="middle">✅</td>
+          <td>
+            🔥🔥🔥  <a href="https://huggingface.co/01-ai/Yi-1.5-34B-Chat">Yi-1.5-34B-Chat</a><br/>
+            🔥🔥🔥  <a href="https://huggingface.co/01-ai/Yi-1.5-9B-Chat">Yi-1.5-9B-Chat</a><br/>
+            🔥🔥🔥  <a href="https://huggingface.co/01-ai/Yi-1.5-6B-Chat">Yi-1.5-6B-Chat</a><br/>
+            🔥🔥🔥  <a href="https://huggingface.co/01-ai/Yi-34B-Chat">Yi-34B-Chat</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" valign="middle">Starling</td>
+          <td align="center" valign="middle">✅</td>
+          <td>
+            🔥🔥🔥  <a href="https://huggingface.co/Nexusflow/Starling-LM-7B-beta">Starling-LM-7B-beta</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" valign="middle">SOLAR</td>
+          <td align="center" valign="middle">✅</td>
+          <td>
+            🔥🔥🔥  <a href="https://huggingface.co/upstage/SOLAR-10.7B-Instruct-v1.0">SOLAR-10.7B</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" valign="middle">Mixtral</td>
+          <td align="center" valign="middle">✅</td>
+          <td>
+            🔥🔥🔥  <a href="https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1">Mixtral-8x7B</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" valign="middle">Phi</td>
+          <td align="center" valign="middle">✅</td>
+          <td>
+            🔥🔥🔥  <a href="https://huggingface.co/collections/microsoft/phi-3-6626e15e9585a200d2d761e3">Phi-3</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
   - [更多开源模型](https://www.yuque.com/eosphoros/dbgpt-docs/iqaaqwriwhp6zslc#qQktR)
 
   - 支持在线代理模型
@@ -232,10 +330,6 @@
 
 🌐 [小程序云部署](https://www.yuque.com/eosphoros/dbgpt-docs/ek12ly8k661tbyn8)
 
-### 多语言切换
-
-在.env 配置文件当中，修改LANGUAGE参数来切换使用不同的语言，默认是英文(中文zh, 英文en, 其他语言待补充)
-
 ## 使用说明
 
 ### 多模型使用
@@ -261,6 +355,10 @@
 ## Licence
 
 The MIT License (MIT)
+
+### 免责声明
+
+- [免责声明](./DISCKAIMER.md)
 
 ## 引用
 如果您发现`DB-GPT`对您的研究或开发有用，请引用以下论文，其中：
@@ -305,16 +403,6 @@ The MIT License (MIT)
           钉钉
         </p>
     </figure>
-    <figure style="display: flex; flex-direction: column;">
-        <img src="./assets/wechat.jpg" alt="图片1" style="width: 200px;">
-        <p style="text-align: center;">
-          微信
-        </p> 
-    </figure>
 </div>
-
-<!-- <p align="center">
-  <img src="./assets/wechat.jpg" width="300px" />
-</p> -->
 
 [![Star History Chart](https://api.star-history.com/svg?repos=csunny/DB-GPT&type=Date)](https://star-history.com/#csunny/DB-GPT)

@@ -2,11 +2,11 @@ import asyncio
 import os
 
 from dbgpt.configs.model_config import MODEL_PATH, PILOT_PATH, ROOT_PATH
-from dbgpt.rag import ChunkParameters
-from dbgpt.rag.assembler import EmbeddingAssembler
 from dbgpt.rag.embedding import DefaultEmbeddingFactory
-from dbgpt.rag.knowledge import KnowledgeFactory
-from dbgpt.storage.vector_store.chroma_store import ChromaStore, ChromaVectorConfig
+from dbgpt_ext.rag import ChunkParameters
+from dbgpt_ext.rag.assembler import EmbeddingAssembler
+from dbgpt_ext.rag.knowledge import KnowledgeFactory
+from dbgpt_ext.storage.vector_store.chroma_store import ChromaStore, ChromaVectorConfig
 
 """Embedding rag example.
     pre-requirements:
@@ -25,13 +25,15 @@ def _create_vector_connector():
     """Create vector connector."""
     config = ChromaVectorConfig(
         persist_path=PILOT_PATH,
+    )
+
+    return ChromaStore(
+        config,
         name="embedding_rag_test",
         embedding_fn=DefaultEmbeddingFactory(
             default_model_name=os.path.join(MODEL_PATH, "text2vec-large-chinese"),
         ).create(),
     )
-
-    return ChromaStore(config)
 
 
 async def main():

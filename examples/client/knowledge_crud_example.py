@@ -62,11 +62,12 @@ Example:
         # 10. Delete a document
         res = await delete_document(client, "150")
 """
+
 import asyncio
 
-from dbgpt.client import Client
-from dbgpt.client.knowledge import create_space
-from dbgpt.client.schema import SpaceModel
+from dbgpt_client import Client
+from dbgpt_client.knowledge import create_space
+from dbgpt_client.schema import SpaceModel
 
 
 async def main():
@@ -74,16 +75,20 @@ async def main():
     DBGPT_API_KEY = "dbgpt"
     client = Client(api_key=DBGPT_API_KEY)
 
-    res = await create_space(
-        client,
-        SpaceModel(
-            name="test_space_1",
-            vector_type="Chroma",
-            desc="for client space desc",
-            owner="dbgpt",
-        ),
-    )
-    print(res)
+    try:
+        res = await create_space(
+            client,
+            SpaceModel(
+                name="test_space_1",
+                vector_type="Chroma",
+                desc="for client space desc",
+                owner="dbgpt",
+            ),
+        )
+        print(res)
+    finally:
+        # explicitly close client to avoid event loop closed error
+        await client.aclose()
 
     # list all spaces
     # res = await list_space(client)

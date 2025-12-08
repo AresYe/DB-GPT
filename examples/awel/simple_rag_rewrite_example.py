@@ -28,6 +28,8 @@
             "context":"steve curry and lebron james are nba all-stars"
         }'
 """
+
+import os
 from typing import Dict
 
 from dbgpt._private.pydantic import BaseModel, Field
@@ -60,7 +62,10 @@ with DAG("dbgpt_awel_simple_rag_rewrite_example") as dag:
     )
     request_handle_task = RequestHandleOperator()
     # build query rewrite operator
-    rewrite_task = QueryRewriteOperator(llm_client=OpenAILLMClient(), nums=2)
+    rewrite_task = QueryRewriteOperator(
+        llm_client=OpenAILLMClient(api_key=os.getenv("OPENAI_API_KEY", "your api key")),
+        nums=2,
+    )
     trigger >> request_handle_task >> rewrite_task
 
 

@@ -21,6 +21,7 @@ import TabItem from '@theme/TabItem';
   values={[
     {label: 'Curl', value: 'curl'},
     {label: 'Python', value: 'python'},
+    {label: 'Python(OpenAI SDK)', value: 'openai-sdk'},
   ]
 }>
 
@@ -34,7 +35,7 @@ curl -X POST "http://localhost:5670/api/v2/chat/completions" \
     -H "Authorization: Bearer $DBGPT_API_KEY" \
     -H "accept: application/json" \
     -H "Content-Type: application/json" \
-    -d "{\"messages\":\"Hello\",\"model\":\"chatgpt_proxyllm\", \"chat_mode\": \"chat_flow\", \"chat_param\": \"$FLOW_ID\"}"
+    -d "{\"messages\":\"Hello\",\"model\":\"gpt-4o\", \"chat_mode\": \"chat_flow\", \"chat_param\": \"$FLOW_ID\"}"
 
 ```
  </TabItem>
@@ -42,7 +43,7 @@ curl -X POST "http://localhost:5670/api/v2/chat/completions" \
 <TabItem value="python">
 
 ```python
-from dbgpt.client import Client
+from dbgpt_client import Client
 
 DBGPT_API_KEY = "dbgpt"
 FLOW_ID="{YOUR_FLOW_ID}"
@@ -50,18 +51,53 @@ FLOW_ID="{YOUR_FLOW_ID}"
 client = Client(api_key=DBGPT_API_KEY)
 async for data in client.chat_stream(
     messages="Introduce AWEL", 
-    model="chatgpt_proxyllm", 
+    model="gpt-4o", 
     chat_mode="chat_flow", 
     chat_param=FLOW_ID
 ):
     print(data)
 ```
  </TabItem>
+
+
+<TabItem value="openai-sdk">
+
+```python
+from openai import OpenAI
+
+DBGPT_API_KEY = "dbgpt"
+FLOW_ID="{YOUR_FLOW_ID}"
+
+client = OpenAI(
+    api_key=DBGPT_API_KEY,
+    base_url="http://localhost:5670/api/v2"
+)
+response = client.chat.completions.create(
+    model="gpt-4o",
+    messages=[
+        {
+            "role": "user",
+            "content": "Hello",
+        },
+    ],
+    extra_body={
+        "chat_mode": "chat_flow",
+        "chat_param": FLOW_ID,
+    },
+    stream=True,
+    max_tokens=2048,
+)
+
+for chunk in response:
+    delta_content = chunk.choices[0].delta.content
+    print(delta_content, end="", flush=True)
+```
+ </TabItem>
 </Tabs>
 
 #### Chat Completion Stream Response
 ```commandline
-data: {"id": "579f8862-fc4b-481e-af02-a127e6d036c8", "created": 1710918094, "model": "chatgpt_proxyllm", "choices": [{"index": 0, "delta": {"role": "assistant", "content": "\n\n"}}]}
+data: {"id": "579f8862-fc4b-481e-af02-a127e6d036c8", "created": 1710918094, "model": "gpt-4o", "choices": [{"index": 0, "delta": {"role": "assistant", "content": "\n\n"}}]}
 ```
 ### Create Flow
 
@@ -117,8 +153,8 @@ FLOW_ID={YOUR_FLOW_ID}
 
 
 ```python
-from dbgpt.client import Client
-from dbgpt.client.flow import delete_flow
+from dbgpt_client import Client
+from dbgpt_client.flow import delete_flow
 
 DBGPT_API_KEY = "dbgpt"
 flow_id = "{your_flow_id}"
@@ -170,8 +206,8 @@ curl -X GET "http://localhost:5670/api/v2/serve/awel/flows/$FLOW_ID" -H "Authori
 
 
 ```python
-from dbgpt.client import Client
-from dbgpt.client.flow import get_flow
+from dbgpt_client import Client
+from dbgpt_client.flow import get_flow
 
 DBGPT_API_KEY = "dbgpt"
 flow_id = "{your_flow_id}"
@@ -224,8 +260,8 @@ curl -X GET "http://localhost:5670/api/v2/serve/awel/flows" -H "Authorization: B
 
 
 ```python
-from dbgpt.client import Client
-from dbgpt.client.flow import list_flow
+from dbgpt_client import Client
+from dbgpt_client.flow import list_flow
 
 DBGPT_API_KEY = "dbgpt"
 

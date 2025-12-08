@@ -13,10 +13,8 @@ import { GPTVis } from '@antv/gpt-vis';
 import { Tag } from 'antd';
 import classNames from 'classnames';
 import { PropsWithChildren, ReactNode, memo, useContext, useMemo } from 'react';
-import rehypeRaw from 'rehype-raw';
-import remarkGfm from 'remark-gfm';
 import { renderModelIcon } from '../header/model-selector';
-import markdownComponents from './config';
+import markdownComponents, { markdownPlugins, preprocessLaTeX } from './config';
 
 interface Props {
   content: Omit<IChatDialogueMessageSchema, 'context'> & {
@@ -60,10 +58,7 @@ const pluginViewStatusMapper: Record<DBGPTView['status'], { bgClass: string; ico
 };
 
 function formatMarkdownVal(val: string) {
-  return val
-    .replaceAll('\\n', '\n')
-    .replace(/<table(\w*=[^>]+)>/gi, '<table $1>')
-    .replace(/<tr(\w*=[^>]+)>/gi, '<tr $1>');
+  return val.replace(/<table(\w*=[^>]+)>/gi, '<table $1>').replace(/<tr(\w*=[^>]+)>/gi, '<tr $1>');
 }
 
 function ChatContent({ children, content, isChartChat, onLinkClick }: PropsWithChildren<Props>) {
@@ -131,8 +126,8 @@ function ChatContent({ children, content, isChartChat, onLinkClick }: PropsWithC
             </div>
             {result ? (
               <div className='px-4 md:px-6 py-4 text-sm'>
-                <GPTVis components={markdownComponents} rehypePlugins={[rehypeRaw]} remarkPlugins={[remarkGfm]}>
-                  {result ?? ''}
+                <GPTVis components={markdownComponents} {...markdownPlugins}>
+                  {preprocessLaTeX(result ?? '')}
                 </GPTVis>
               </div>
             ) : (
@@ -172,12 +167,8 @@ function ChatContent({ children, content, isChartChat, onLinkClick }: PropsWithC
         )}
         {/* Markdown */}
         {isRobot && typeof context === 'string' && (
-          <GPTVis
-            components={{ ...markdownComponents, ...extraMarkdownComponents }}
-            rehypePlugins={[rehypeRaw]}
-            remarkPlugins={[remarkGfm]}
-          >
-            {formatMarkdownVal(value)}
+          <GPTVis components={{ ...markdownComponents, ...extraMarkdownComponents }} {...markdownPlugins}>
+            {preprocessLaTeX(formatMarkdownVal(value))}
           </GPTVis>
         )}
         {!!relations?.length && (

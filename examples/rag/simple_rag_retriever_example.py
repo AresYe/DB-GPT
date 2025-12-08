@@ -29,21 +29,18 @@
 import os
 from typing import Dict, List
 
-from dbgpt._private.config import Config
 from dbgpt._private.pydantic import BaseModel, Field
 from dbgpt.configs.model_config import MODEL_PATH, PILOT_PATH
 from dbgpt.core import Chunk
 from dbgpt.core.awel import DAG, HttpTrigger, JoinOperator, MapOperator
 from dbgpt.model.proxy import OpenAILLMClient
 from dbgpt.rag.embedding import DefaultEmbeddingFactory
-from dbgpt.rag.operators import (
+from dbgpt_ext.rag.operators import (
     EmbeddingRetrieverOperator,
     QueryRewriteOperator,
     RerankOperator,
 )
-from dbgpt.storage.vector_store.chroma_store import ChromaStore, ChromaVectorConfig
-
-CFG = Config()
+from dbgpt_ext.storage.vector_store.chroma_store import ChromaStore, ChromaVectorConfig
 
 
 class TriggerReqBody(BaseModel):
@@ -79,13 +76,15 @@ def _create_vector_connector():
     """Create vector connector."""
     config = ChromaVectorConfig(
         persist_path=PILOT_PATH,
+    )
+
+    return ChromaStore(
+        config,
         name="embedding_rag_test",
         embedding_fn=DefaultEmbeddingFactory(
             default_model_name=os.path.join(MODEL_PATH, "text2vec-large-chinese"),
         ).create(),
     )
-
-    return ChromaStore(config)
 
 
 with DAG("simple_sdk_rag_retriever_example") as dag:

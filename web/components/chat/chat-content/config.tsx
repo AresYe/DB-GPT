@@ -4,8 +4,11 @@ import { LinkOutlined, ReadOutlined, SyncOutlined } from '@ant-design/icons';
 import { Datum } from '@antv/ava';
 import { GPTVis, withDefaultChartCode } from '@antv/gpt-vis';
 import { Image, Table, Tabs, TabsProps, Tag } from 'antd';
+import 'katex/dist/katex.min.css';
+import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
 import ReferencesContent from './ReferencesContent';
 import VisAppLink from './VisAppLink';
 import VisChatLink from './VisChatLink';
@@ -13,11 +16,14 @@ import VisResponse from './VisResponse';
 import AgentMessages from './agent-messages';
 import AgentPlans from './agent-plans';
 import { CodePreview } from './code-preview';
+import HtmlPreview from './html-preview';
+import SvgPreview from './svg-preview';
 import VisChart from './vis-chart';
 import VisCode from './vis-code';
 import VisConvertError from './vis-convert-error';
 import VisDashboard from './vis-dashboard';
 import VisPlugin from './vis-plugin';
+import { VisThinking } from './vis-thinking';
 
 type MarkdownComponent = Parameters<typeof GPTVis>['0']['components'];
 
@@ -34,6 +40,46 @@ function matchCustomeTagValues(context: string) {
     return acc;
   }, []);
   return { context, matchValues };
+}
+/**
+ * Preprocess LaTeX syntax, convert \[ \] and \( \) to $$ $$ and $ $
+ * Also handle some common edge cases
+ * @param content
+ */
+export function preprocessLaTeX(content: any): string {
+  if (typeof content !== 'string') {
+    return content;
+  }
+  // Extract code blocks
+  const codeBlocks: string[] = [];
+  content = content.replace(/(```[\s\S]*?```|`[^`\n]+`)/g, match => {
+    codeBlocks.push(match);
+    return `<<CODE_BLOCK_${codeBlocks.length - 1}>>`;
+  });
+
+  // Replace common LaTeX delimiters with KaTeX supported format
+  content = content
+    .replace(/\\\\\[/g, '$$') // Replace \\[ with $$
+    .replace(/\\\\\]/g, '$$') // Replace \\] with $$
+    .replace(/\\\\\(/g, '$') //  Replace \\( with $
+    .replace(/\\\\\)/g, '$') //  Replace \\) with $
+    .replace(/\\\[/g, '$$') //   Replace \[ with $$
+    .replace(/\\\]/g, '$$') // Replace \] with $$
+    .replace(/\\\(/g, '$') // Replace \( with $
+    .replace(/\\\)/g, '$'); // Replaces \( with $
+
+  // Make sure there is enough line breaks before and after the block formula
+  content = content
+    .replace(/([^\n])\$\$/g, '$1\n\n$$') // Add a blank line before $$
+    .replace(/\$\$([^\n])/g, '$$\n\n$1'); // Add a blank line after $$
+
+  // Handle currency symbols - escape $ that are obviously currency
+  content = content.replace(/\$(?=\d)/g, '\\$');
+
+  // Recover code blocks
+  content = content.replace(/<<CODE_BLOCK_(\d+)>>/g, (_: any, index: string) => codeBlocks[parseInt(index)]);
+
+  return content;
 }
 
 const codeComponents = {
@@ -140,6 +186,38 @@ const codeComponents = {
           return <CodePreview language={lang} code={content} />;
         }
       },
+      'vis-thinking': ({ className, children }) => {
+        const content = String(children);
+        const _lang = className?.replace('language-', '') || 'javascript';
+        return <VisThinking content={content} />;
+      },
+      // Add HTML language processor
+      html: ({ className, children }) => {
+        const content = String(children);
+        const _lang = className;
+        return <HtmlPreview code={content} language='html' />;
+      },
+      // Support for Web languages that mix HTML, CSS, and JS
+      web: ({ className, children }) => {
+        const content = String(children);
+        const _lang = className;
+        return <HtmlPreview code={content} language='html' />;
+      },
+      svg: ({ className, children }) => {
+        const content = String(children);
+        const _lang = className;
+        return <SvgPreview code={content} language='svg' />;
+      },
+      xml: ({ className, children }) => {
+        const content = String(children);
+        const _lang = className;
+        // Check if the content is SVG
+        if (content.includes('<svg') && content.includes('</svg>')) {
+          return <SvgPreview code={content} language='svg' />;
+        }
+        // If it is not SVG, use normal XML highlighting
+        return <CodePreview code={content} language='xml' />;
+      },
     },
     defaultRenderer({ node, className, children, style, ...props }) {
       const content = String(children);
@@ -155,7 +233,11 @@ const codeComponents = {
               {children}
             </code>
           )}
-          <GPTVis components={markdownComponents} rehypePlugins={[rehypeRaw]} remarkPlugins={[remarkGfm]}>
+          <GPTVis
+            components={markdownComponents}
+            rehypePlugins={[rehypeRaw, rehypeKatex]}
+            remarkPlugins={[remarkGfm, remarkMath]}
+          >
             {matchValues.join('\n')}
           </GPTVis>
         </>
@@ -366,4 +448,8 @@ const markdownComponents = {
   ...extraComponents,
 };
 
+export const markdownPlugins = {
+  remarkPlugins: [remarkGfm, [remarkMath, { singleDollarTextMath: true }]],
+  rehypePlugins: [rehypeRaw, [rehypeKatex, { output: 'htmlAndMathml' }]],
+};
 export default markdownComponents;

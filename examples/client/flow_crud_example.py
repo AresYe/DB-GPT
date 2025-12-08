@@ -26,18 +26,23 @@ Example:
         res = await list_flow(client)
 
 """
+
 import asyncio
 
-from dbgpt.client import Client
-from dbgpt.client.flow import list_flow
+from dbgpt_client import Client
+from dbgpt_client.flow import list_flow
 
 
 async def main():
     # initialize client
     DBGPT_API_KEY = "dbgpt"
     client = Client(api_key=DBGPT_API_KEY)
-    res = await list_flow(client)
-    print(res)
+    try:
+        res = await list_flow(client)
+        print(res)
+    finally:
+        # explicitly close client to avoid event loop closed error
+        await client.aclose()
 
 
 if __name__ == "__main__":

@@ -5,8 +5,12 @@ models/
 plugins/
 pilot/data
 pilot/message
+pilot/meta_data/alembic/versions
+pilot/meta_data/dbgpt.db
 logs/
 venv/
+.venv/
+.venv.make/
 web/node_modules/
 web/.next/
 web/.env

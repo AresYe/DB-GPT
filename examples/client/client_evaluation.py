@@ -55,9 +55,9 @@ Example:
 
 import asyncio
 
-from dbgpt.client import Client
-from dbgpt.client.evaluation import run_evaluation
-from dbgpt.serve.evaluate.api.schemas import EvaluateServeRequest
+from dbgpt_client import Client
+from dbgpt_client.evaluation import run_evaluation
+from dbgpt_serve.evaluate.api.schemas import EvaluateServeRequest
 
 
 async def main():
@@ -83,8 +83,12 @@ async def main():
             }
         ],
     )
-    data = await run_evaluation(client, request=request)
-    print(data)
+    try:
+        data = await run_evaluation(client, request=request)
+        print(data)
+    finally:
+        # explicitly close client to avoid event loop closed error
+        await client.aclose()
 
 
 if __name__ == "__main__":

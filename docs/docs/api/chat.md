@@ -22,6 +22,7 @@ import TabItem from '@theme/TabItem';
   values={[
     {label: 'Curl', value: 'curl'},
     {label: 'Python', value: 'python'},
+    {label: 'Python(OpenAI SDK)', value: 'openai-sdk'},
   ]
 }>
 
@@ -34,7 +35,7 @@ import TabItem from '@theme/TabItem';
     -H "Authorization: Bearer $DBGPT_API_KEY" \
     -H "accept: application/json" \
     -H "Content-Type: application/json" \
-    -d "{\"messages\":\"Hello\",\"model\":\"chatgpt_proxyllm\", \"stream\": true}"
+    -d "{\"messages\":\"Hello\",\"model\":\"gpt-4o\", \"stream\": true}"
 
 ```
  </TabItem>
@@ -42,39 +43,71 @@ import TabItem from '@theme/TabItem';
 <TabItem value="python">
 
 ```python
-from dbgpt.client import Client
+from dbgpt_client import Client
 
 DBGPT_API_KEY = "dbgpt"
 client = Client(api_key=DBGPT_API_KEY)
 
 async for data in client.chat_stream(
-    model="chatgpt_proxyllm",
+    model="gpt-4o",
     messages="hello",
 ):
     print(data)
 ```
  </TabItem>
+
+<TabItem value="openai-sdk">
+
+```python
+from openai import OpenAI
+DBGPT_API_KEY = "dbgpt"
+
+client = OpenAI(
+    api_key=DBGPT_API_KEY,
+    base_url="http://localhost:5670/api/v2"
+)
+response = client.chat.completions.create(
+    model="gpt-4o",
+    messages=[
+        {
+            "role": "user",
+            "content": "Hello",
+        },
+    ],
+    extra_body={
+        "chat_mode": "chat_normal",
+    },
+    stream=True,
+    max_tokens=2048,
+)
+
+for chunk in response:
+    delta_content = chunk.choices[0].delta.content
+    print(delta_content, end="", flush=True)
+```
+ </TabItem>
 </Tabs>
+
 
 ### Chat Completion Stream Response
 ```commandline
-data: {"id": "chatcmpl-ba6fb52e-e5b2-11ee-b031-acde48001122", "model": "chatgpt_proxyllm", "choices": [{"index": 0, "delta": {"role": "assistant", "content": "Hello"}}]}
+data: {"id": "chatcmpl-ba6fb52e-e5b2-11ee-b031-acde48001122", "model": "gpt-4o", "choices": [{"index": 0, "delta": {"role": "assistant", "content": "Hello"}}]}
 
-data: {"id": "chatcmpl-ba6fb52e-e5b2-11ee-b031-acde48001122", "model": "chatgpt_proxyllm", "choices": [{"index": 0, "delta": {"role": "assistant", "content": "!"}}]}
+data: {"id": "chatcmpl-ba6fb52e-e5b2-11ee-b031-acde48001122", "model": "gpt-4o", "choices": [{"index": 0, "delta": {"role": "assistant", "content": "!"}}]}
 
-data: {"id": "chatcmpl-ba6fb52e-e5b2-11ee-b031-acde48001122", "model": "chatgpt_proxyllm", "choices": [{"index": 0, "delta": {"role": "assistant", "content": " How"}}]}
+data: {"id": "chatcmpl-ba6fb52e-e5b2-11ee-b031-acde48001122", "model": "gpt-4o", "choices": [{"index": 0, "delta": {"role": "assistant", "content": " How"}}]}
 
-data: {"id": "chatcmpl-ba6fb52e-e5b2-11ee-b031-acde48001122", "model": "chatgpt_proxyllm", "choices": [{"index": 0, "delta": {"role": "assistant", "content": " can"}}]}
+data: {"id": "chatcmpl-ba6fb52e-e5b2-11ee-b031-acde48001122", "model": "gpt-4o", "choices": [{"index": 0, "delta": {"role": "assistant", "content": " can"}}]}
 
-data: {"id": "chatcmpl-ba6fb52e-e5b2-11ee-b031-acde48001122", "model": "chatgpt_proxyllm", "choices": [{"index": 0, "delta": {"role": "assistant", "content": " I"}}]}
+data: {"id": "chatcmpl-ba6fb52e-e5b2-11ee-b031-acde48001122", "model": "gpt-4o", "choices": [{"index": 0, "delta": {"role": "assistant", "content": " I"}}]}
 
-data: {"id": "chatcmpl-ba6fb52e-e5b2-11ee-b031-acde48001122", "model": "chatgpt_proxyllm", "choices": [{"index": 0, "delta": {"role": "assistant", "content": " assist"}}]}
+data: {"id": "chatcmpl-ba6fb52e-e5b2-11ee-b031-acde48001122", "model": "gpt-4o", "choices": [{"index": 0, "delta": {"role": "assistant", "content": " assist"}}]}
 
-data: {"id": "chatcmpl-ba6fb52e-e5b2-11ee-b031-acde48001122", "model": "chatgpt_proxyllm", "choices": [{"index": 0, "delta": {"role": "assistant", "content": " you"}}]}
+data: {"id": "chatcmpl-ba6fb52e-e5b2-11ee-b031-acde48001122", "model": "gpt-4o", "choices": [{"index": 0, "delta": {"role": "assistant", "content": " you"}}]}
 
-data: {"id": "chatcmpl-ba6fb52e-e5b2-11ee-b031-acde48001122", "model": "chatgpt_proxyllm", "choices": [{"index": 0, "delta": {"role": "assistant", "content": " today"}}]}
+data: {"id": "chatcmpl-ba6fb52e-e5b2-11ee-b031-acde48001122", "model": "gpt-4o", "choices": [{"index": 0, "delta": {"role": "assistant", "content": " today"}}]}
 
-data: {"id": "chatcmpl-ba6fb52e-e5b2-11ee-b031-acde48001122", "model": "chatgpt_proxyllm", "choices": [{"index": 0, "delta": {"role": "assistant", "content": "?"}}]}
+data: {"id": "chatcmpl-ba6fb52e-e5b2-11ee-b031-acde48001122", "model": "gpt-4o", "choices": [{"index": 0, "delta": {"role": "assistant", "content": "?"}}]}
 
 data: [DONE]
 ```
@@ -98,18 +131,20 @@ data: [DONE]
     -H "Authorization: Bearer $DBGPT_API_KEY" \
     -H "accept: application/json" \
     -H "Content-Type: application/json" \
-    -d "{\"messages\":\"Hello\",\"model\":\"chatgpt_proxyllm\", \"stream\": false}"
+    -d "{\"messages\":\"Hello\",\"model\":\"gpt-4o\", \"stream\": false}"
 ```
  </TabItem>
 
 <TabItem value="python">
 
 ```python
-from dbgpt.client import Client
+from dbgpt_client import Client
 
 DBGPT_API_KEY = "dbgpt"
 client = Client(api_key=DBGPT_API_KEY)
-response = await client.chat(model="chatgpt_proxyllm" ,messages="hello")
+response = await client.chat(model="gpt-4o" ,messages="hello")
+print(response)
+await client.aclose()
 ```
  </TabItem>
 </Tabs>
@@ -120,7 +155,7 @@ response = await client.chat(model="chatgpt_proxyllm" ,messages="hello")
     "id": "a8321543-52e9-47a5-a0b6-3d997463f6a3",
     "object": "chat.completion",
     "created": 1710826792,
-    "model": "chatgpt_proxyllm",
+    "model": "gpt-4o",
     "choices": [
         {
             "index": 0,

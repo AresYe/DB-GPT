@@ -3,15 +3,16 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { Button, Input, Spin } from 'antd';
 import classNames from 'classnames';
 import { useSearchParams } from 'next/navigation';
-import React, { useContext, useMemo, useRef, useState } from 'react';
+import React, { forwardRef, useContext, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { UserChatContent } from '@/types/chat';
+import { parseResourceValue } from '@/utils';
 import ToolsBar from './ToolsBar';
 
-const ChatInputPanel: React.FC<{ ctrl: AbortController }> = ({ ctrl }) => {
+const ChatInputPanel: React.ForwardRefRenderFunction<any, { ctrl: AbortController }> = ({ ctrl }, ref) => {
   const { t } = useTranslation();
   const {
-    scrollRef,
     replyLoading,
     handleChat,
     appInfo,
@@ -19,11 +20,12 @@ const ChatInputPanel: React.FC<{ ctrl: AbortController }> = ({ ctrl }) => {
     temperatureValue,
     maxNewTokensValue,
     resourceValue,
+    setResourceValue,
     refreshDialogList,
   } = useContext(ChatContentContext);
 
   const searchParams = useSearchParams();
-  // const scene = searchParams?.get('scene') ?? ''; // unused
+  const scene = searchParams?.get('scene') ?? '';
   const select_param = searchParams?.get('select_param') ?? '';
 
   const [userInput, setUserInput] = useState<string>('');
@@ -38,14 +40,32 @@ const ChatInputPanel: React.FC<{ ctrl: AbortController }> = ({ ctrl }) => {
 
   const onSubmit = async () => {
     submitCountRef.current++;
-    setTimeout(() => {
-      scrollRef.current?.scrollTo({
-        top: scrollRef.current?.scrollHeight,
-        behavior: 'smooth',
+    // Remove immediate scroll to avoid conflict with ChatContentContainer's auto-scroll
+    // ChatContentContainer will handle scrolling when new content is added
+    setUserInput('');
+    const resources = parseResourceValue(resourceValue);
+    // Clear the resourceValue if it not empty
+    let newUserInput: UserChatContent;
+    if (resources.length > 0) {
+      if (scene !== 'chat_excel') {
+        // Chat Excel scene does not need to clear the resourceValue
+        // We need to find a better way to handle this
+        setResourceValue(null);
+      }
+      const messages = [...resources];
+      messages.push({
+        type: 'text',
+        text: userInput,
       });
-      setUserInput('');
-    }, 0);
-    await handleChat(userInput, {
+      newUserInput = {
+        role: 'user',
+        content: messages,
+      };
+    } else {
+      newUserInput = userInput;
+    }
+
+    const params = {
       app_code: appInfo.app_code || '',
       ...(paramKey.includes('temperature') && { temperature: temperatureValue }),
       ...(paramKey.includes('max_new_tokens') && { max_new_tokens: maxNewTokensValue }),
@@ -56,12 +76,20 @@ const ChatInputPanel: React.FC<{ ctrl: AbortController }> = ({ ctrl }) => {
             ? resourceValue
             : JSON.stringify(resourceValue) || currentDialogue.select_param,
       }),
-    });
+    };
+
+    await handleChat(newUserInput, params);
+
     // 如果应用进来第一次对话，刷新对话列表
     if (submitCountRef.current === 1) {
       await refreshDialogList();
     }
   };
+
+  // expose setUserInput to parent via ref
+  useImperativeHandle(ref, () => ({
+    setUserInput,
+  }));
 
   return (
     <div className='flex flex-col w-5/6 mx-auto pt-4 pb-6 bg-transparent'>
@@ -127,4 +155,4 @@ const ChatInputPanel: React.FC<{ ctrl: AbortController }> = ({ ctrl }) => {
   );
 };
 
-export default ChatInputPanel;
+export default forwardRef(ChatInputPanel);

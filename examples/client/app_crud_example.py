@@ -11,18 +11,23 @@ Example:
         # 2. Get an app
         res = await get_app(client, app_id="bf1c7561-13fc-4fe0-bf5d-c22e724766a8")
 """
+
 import asyncio
 
-from dbgpt.client import Client
-from dbgpt.client.app import list_app
+from dbgpt_client import Client
+from dbgpt_client.app import list_app
 
 
 async def main():
     # initialize client
     DBGPT_API_KEY = "dbgpt"
     client = Client(api_key=DBGPT_API_KEY)
-    res = await list_app(client)
-    print(res)
+    try:
+        res = await list_app(client)
+        print(res)
+    finally:
+        # explicitly close client to avoid event loop closed error
+        await client.aclose()
 
 
 if __name__ == "__main__":
